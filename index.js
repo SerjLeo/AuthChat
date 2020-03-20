@@ -2,6 +2,7 @@ const WebSocket = require('ws');
 const http = require('http')
 const session = require('express-session');
 const express = require('express');
+const bodyParser = require('body-parser')
 const uuid = require('uuid');
 
 const app = express();
@@ -13,6 +14,7 @@ const sessionParser = session({
   secret: '$eCuRiTy',
   resave: false
 });
+app.use(bodyParser());
 app.use(sessionParser);
 app.use(express.static(__dirname + '/public'))
 
@@ -23,6 +25,7 @@ app.post('/login', function(req, res) {
   console.log(req.body);
   console.log('Login route fetched');
   req.session.userId = id;
+  req.session.userName = req.body.name;
   res.send({ result: 'OK', message: 'Session updated' })
 });
 
