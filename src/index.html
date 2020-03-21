@@ -6,24 +6,21 @@
       <title>Express session demo</title>
   </head>
   <body>
-    <h1>Welcome to LiveChat</h1>
-    <form autocomplete="off" class="form">
-      <label for="">Enter name</label>
-      <input type="text" class="input" placeholder="Enter your nickname">
-      <button type="submit">Connect</button>
-    </form>
-    <button id="login" type="button" title="Simulate login">
-      Simulate login
-    </button>
-    <button id="logout" type="button" title="Simulate logout">
-      Simulate logout
-    </button>
-    <button id="wsButton" type="button" title="Open WebSocket connection">
-      Open WebSocket connection
-    </button>
-    <button id="wsSendButton" type="button" title="Send WebSocket message">
-      Send WebSocket message
-    </button>
-    <pre id="messages" style="height: 400px; overflow: scroll"></pre>
+    <div class="container">
+      <div class="wrapper">
+        <h1>Welcome to LiveChat</h1>
+        <form autocomplete="off" class="form">
+          <input type="text" class="input" placeholder="Enter your nickname">
+          <button type="submit">Connect</button>
+        </form>
+        <button class="logout">Logout</button>
+        <div class="chat"></div>
+        <form autocomplete="off" class="chat-form">
+          <input type="text" class="message-input" placeholder="Print message">
+          <button type="submit">Send</button>
+        </form>
+        <div class="alert"></div>
+      </div>
+    </div>
   </body>
 </html>

@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "npx webpack --mode development",
     "build": "npx webpack --mode production",
+    "watch": "npx webpack --mode development --watch",
     "server": "node index.js"
   },
   "keywords": [

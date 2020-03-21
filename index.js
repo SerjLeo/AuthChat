@@ -8,28 +8,18 @@ const uuid = require('uuid');
 const app = express();
 const clients = new Map();
 
-//Using middleware
-const sessionParser = session({
-  saveUninitialized: false,
-  secret: '$eCuRiTy',
-  resave: false
-});
-app.use(bodyParser());
-app.use(sessionParser);
-app.use(express.static(__dirname + '/public'))
-
 //Defining routes
+let router = express.Router()
 
-app.post('/login', function(req, res) {
+router.post('/login', (req, res) => {
   const id = uuid.v4();
-  console.log(req.body);
   console.log('Login route fetched');
   req.session.userId = id;
   req.session.userName = req.body.name;
-  res.send({ result: 'OK', message: 'Session updated' })
+  res.status(201).send({ result: 'OK', message: 'Session updated' })
 });
 
-app.delete('/logout', function(request, response) {
+router.delete('/logout', (request, response) => {
   const ws = clients.get(request.session.userId);
   console.log('Destroying session');
   request.session.destroy(function() {
@@ -38,6 +28,17 @@ app.delete('/logout', function(request, response) {
     response.send({ result: 'OK', message: 'Session destroyed' });
   });
 });
+
+//Using middleware
+const sessionParser = session({
+  saveUninitialized: false,
+  secret: '$eCuRiTy',
+  resave: false
+});
+app.use(bodyParser.json());
+app.use(sessionParser);
+app.use(express.static(__dirname + '/public'))
+app.use('/', router)
 
 const server = http.createServer(app)
 const wss = new WebSocket.Server({clientTracking: false, noServer: true});
@@ -64,6 +65,7 @@ server.listen(8080, function() {
 
 wss.on('connection', function(ws, request) {
   const userId = request.session.userId;
+  const userName = request.session.userName;
 
   clients.set(userId, ws);
 
@@ -71,7 +73,10 @@ wss.on('connection', function(ws, request) {
     //
     // Here we can now use session parameters.
     //
-    console.log(`Received message ${message} from user ${userId}`);
+    console.log(`Received message ${message} from user ${userName}`);
+    for (let client of clients.values()) {
+      client.send(message)
+    }
   });
 
   ws.on('close', function() {
