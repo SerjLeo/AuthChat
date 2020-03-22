@@ -17,36 +17,22 @@ export default class Chat {
     }
 
     printMessage(msg){
+        let data = JSON.parse(msg.data)
         let message = document.createElement('div')
-        message.innerHTML = msg.data
+        if(data.from) {
+            message.innerHTML = `<div class="chat-message">
+                                    <div class="from">${data.from} :</div>
+                                    <div class="message">${data.message}</div>
+                                </div>`
+        } else {
+            message.innerHTML = `<div class="chat-message">
+                                    <div class="from"></div>
+                                    <div class="system-message">${data.message}</div>
+                                </div>`
+        }
         document.querySelector('.chat').appendChild(message)
     }
-    // wsButton.onclick = function() {
-    //         if (ws) {
-    //           ws.onerror = ws.onopen = ws.onclose = null;
-    //           ws.close();
-    //         }
-        
-    //         ;
     //         ws.onerror = function() {
     //           showMessage('WebSocket error');
     //         };
-    //         ws.onopen = function() {
-    //           showMessage('WebSocket connection established');
-    //         };
-    //         ws.onclose = function() {
-    //           showMessage('WebSocket connection closed');
-    //           ws = null;
-    //         };
-    //       };
-        
-    //       wsSendButton.onclick = function() {
-    //         if (!ws) {
-    //           showMessage('No WebSocket connection');
-    //           return;
-    //         }
-        
-    //         ws.send('Hello World!');
-    //         showMessage('Sent "Hello World!"');
-    //       };
 }

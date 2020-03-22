@@ -11,15 +11,21 @@ export default class Alert {
 
     showAlert(){
         this._alert = document.createElement('div')
-        this._alert.className= 'alertChild'
+        this._alert.className = 'alertChild'
         this._alert.innerHTML = this._text
         this._anchorEl.appendChild(this._alert)
+        setTimeout(() => {
+            this._alert.setAttribute("style", "visibility: visible; opacity: 1;")
+        }, 0)
         setTimeout(() => {
             this.destroyAlert()
         }, this._timeout)
     }
 
     destroyAlert(){
-        this._anchorEl.removeChild(this._alert)
+        this._alert.setAttribute("style", "visibility: hidden; opacity: 0;")
+        setTimeout(() => {
+            this._anchorEl.removeChild(this._alert)
+        }, 500)
     }
 }

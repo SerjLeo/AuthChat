@@ -27,7 +27,7 @@ export default class User {
                 return false
             }
         } catch (error) {
-            new Alert(error.message, 'error', 5000);
+            new Alert(error.message, 'error', 5000).showAlert();
         }
     }
 
@@ -44,7 +44,7 @@ export default class User {
             }
             else return false
         } catch (error) {
-            new Alert(error.message, 'error', 5000);
+            new Alert(error.message, 'error', 5000).showAlert();
         }
     }
 }

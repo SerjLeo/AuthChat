@@ -6,21 +6,34 @@
       <title>Express session demo</title>
   </head>
   <body>
-    <div class="container">
-      <div class="wrapper">
+    <div class="welcome-container">
+      <div class="welcome-form-wrapper">
         <h1>Welcome to LiveChat</h1>
-        <form autocomplete="off" class="form">
-          <input type="text" class="input" placeholder="Enter your nickname">
-          <button type="submit">Connect</button>
+        <form autocomplete="off" class="welcome-form">
+          <div class="input-field">
+            <input type="text" class="input" required="">
+            <label>Enter your nickname</label>
+            <span></span>
+          </div>
+          <button type="submit" class="button">Connect to chat</button>
         </form>
-        <button class="logout">Logout</button>
-        <div class="chat"></div>
-        <form autocomplete="off" class="chat-form">
-          <input type="text" class="message-input" placeholder="Print message">
-          <button type="submit">Send</button>
-        </form>
-        <div class="alert"></div>
       </div>
     </div>
+    <div class="chat-container">
+      <div class="chat-wrapper">
+        <button class="logout button">Logout</button>
+        <div class="chat"></div>
+        <form autocomplete="off" class="chat-form">
+          <div class="chat-input">
+            <div class="chat-input-wrapper">
+              <input type="text" class="message-input" placeholder="Print message">
+              <span></span>
+            </div>
+            <button type="submit" class="button">Send</button>
+          </div>
+        </form> 
+      </div>
+    </div>
+    <div class="alert"></div>
   </body>
 </html>

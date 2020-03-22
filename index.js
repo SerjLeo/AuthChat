@@ -68,18 +68,30 @@ wss.on('connection', function(ws, request) {
   const userName = request.session.userName;
 
   clients.set(userId, ws);
+  
+  for (let client of clients.values()) {
+    client.send(JSON.stringify({
+      message: `${userName} connected to chat!`
+    }))
+  }
 
   ws.on('message', function(message) {
-    //
-    // Here we can now use session parameters.
-    //
-    console.log(`Received message ${message} from user ${userName}`);
+    let sendData = {
+      message,
+      from: userName
+    }
+    
     for (let client of clients.values()) {
-      client.send(message)
+      client.send(JSON.stringify(sendData))
     }
   });
 
   ws.on('close', function() {
     clients.delete(userId);
+    for (let client of clients.values()) {
+      client.send(JSON.stringify({
+        message: `${userName} left chat!`
+      }))
+    }
   });
 });
